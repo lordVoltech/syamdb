@@ -40,8 +40,8 @@
                     <td><?php echo $data['km'] ;?></td>
                     <td><?php echo $data['grand_total'] ;?></td>
                     <td>
-                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detil&no_transaksi=<?php echo $data['no_transaksi'];?>" >detail</a><br><br>
-                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detil&no_transaksi=<?php echo $data['no_transaksi'];?>" >detail</a><br><br>
+                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detail&no_transaksi=<?php echo $data['no_transaksi'];?>" >detail</a><br><br>
+                        <a class="badge badge-success" href="index.php?folder=pembayaran&page=p-print&no_transaksi=<?php echo $data['no_transaksi'];?>" >print</a><br><br>
                     </td>
                     <td>
                     <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-ubah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Edit</a><br><br>
