@@ -1,4 +1,17 @@
 <?php
+// --- DEBUGGING: AKTIFKAN LAPORAN ERROR ---
+error_reporting(E_ALL); // Melaporkan semua jenis error
+ini_set('display_errors', 1); // Menampilkan error di output HTML
+ini_set('display_startup_errors', 1); // Menampilkan error saat startup
+// ----------------------------------------
+
+require_once __DIR__ . '/../vendor/autoload.php'; // Sesuaikan path ini jika vendor folder Anda bukan di root project
+include 'koneksi.php'; // Pastikan koneksi.php sudah benar
+
+// ... sisa kode Anda ...
+// 
+
+// Pastikan Dompdf sudah terinstal melalui Composer
 require_once __DIR__ . '/../vendor/autoload.php'; // Sesuaikan path ini jika vendor folder Anda bukan di root project
 include 'koneksi.php'; // Pastikan koneksi.php sudah benar
 
