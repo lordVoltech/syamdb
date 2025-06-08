@@ -102,7 +102,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                             <th width="5%">No</th>
                             <th width="10%">Qty</th>
                             <th>Nama Produk / Jasa</th>
-                            <th width="15%">Harga Satuan</th>
+                            <th width="15%">harga Satuan</th>
                             <th width="15%">Jumlah</th>
                             <th width="20%">Aksi</th>
                         </tr>
@@ -111,7 +111,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                     <tbody>
                         <?php
                         // Query untuk mengambil detail pembayaran
-                        $query_detail = mysqli_query($conn, "SELECT dt.*, p.idproduk, p.nama_barang_jasa, p.harga
+                        $query_detail = mysqli_query($conn, "SELECT dt.*, p.idproduk, p.nama_barang_jasa, p.harga_satuan
                                                              FROM detail_pembayaran dt
                                                              JOIN produk p ON dt.idproduk = p.idproduk
                                                              WHERE dt.no_transaksi = '$no_transaksi'"); // Changed from detail_service and noservice
@@ -125,14 +125,14 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                         } else {
                             // Loop through details if found
                             while ($detail = mysqli_fetch_array($query_detail)) {
-                                $jumlah = $detail['harga'] * $detail['banyaknya'];
+                                $jumlah = $detail['harga_satuan'] * $detail['banyaknya'];
                                 $total_sebelum_diskon += $jumlah;
                         ?>
                                 <tr>
                                     <td><?php echo $index++; ?></td>
                                     <td><?php echo htmlspecialchars($detail['banyaknya']); ?></td>
                                     <td style="text-align: left; padding-left: 10px;"><?php echo htmlspecialchars($detail['nama_barang_jasa']); ?></td>
-                                    <td style="text-align: right; padding-right: 10px;">Rp <?php echo number_format($detail['harga']); ?></td>
+                                    <td style="text-align: right; padding-right: 10px;">Rp <?php echo number_format($detail['harga_satuan']); ?></td>
                                     <td style="text-align: right; padding-right: 10px;">Rp <?php echo number_format($jumlah); ?></td>
                                     
                                     <td style="white-space: nowrap;">
