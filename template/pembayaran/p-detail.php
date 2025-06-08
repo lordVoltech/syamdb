@@ -20,7 +20,12 @@
     <div class="col-lg-10 mx-auto">
         <div class="card">
             <div class="card-body">
+                
                 <h4 class="text-center">Pembayaran</h4>
+                <div class="text-right mb-3"> <a href="index.php?folder=pembayaran&page=p-cetak-pdf&no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>"
+                       class="btn btn-info btn-sm" target="_blank">Cetak Struk PDF</a>
+                </div>
+
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-md-6">
