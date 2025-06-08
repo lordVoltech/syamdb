@@ -125,7 +125,7 @@
                     <table class="table table-bordered table-striped text-center">
                         <?php
                             $query_barang_jasa = mysqli_query($conn, "SELECT id_barang_jasa, qty, sub_total FROM detail_barang_jasa WHERE no_transaksi = '$no_transaksi'");
-                            $barang_jasa_details = mysqli_fetch_array($query);
+                            $barang_jasa_details = mysqli_fetch_array($query_barang_jasa);
 
                         ?>
                         <thead>
