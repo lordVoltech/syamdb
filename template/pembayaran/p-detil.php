@@ -8,19 +8,19 @@ include '../koneksi.php';
 if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi'
     $no_transaksi = $_GET['no_transaksi']; // Changed from $noservice
 
-    // Kueri disesuaikan: JOIN dari transaksi -> kendaraan -> customer untuk dapat nama customer
+    // Kueri disesuaikan: JOIN dari transaksi -> motor -> customer untuk dapat nama customer
     // dan juga join dua kali ke tabel pegawai untuk mekanik dan kasir
     $query_transaksi = mysqli_query($conn, "SELECT 
                                             t.*, 
-                                            k.merek,
-                                            c.namacustomer, 
-                                            pm.namapegawai AS nama_mekanik,
-                                            pk.namapegawai AS nama_kasir
+                                            k.jenis,
+                                            c.nama_cos, 
+                                            pm.nama AS nama_mekanik,
+                                            pk.nama AS nama_kasir
                                           FROM pembayaran t
-                                          LEFT JOIN kendaraan k ON t.no_pol = k.no_pol
-                                          LEFT JOIN customer c ON k.idcustomer = c.idcustomer
-                                          LEFT JOIN pegawai pm ON t.id_mekanik = pm.idpegawai
-                                          LEFT JOIN pegawai pk ON t.id_kasir = pk.idpegawai
+                                          LEFT JOIN motor k ON t.no_pol = k.no_pol
+                                          LEFT JOIN costomer c ON k.id_cos = c.id_cos
+                                          LEFT JOIN pegawai pm ON t.id_mekanik = pm.id_pegawai
+                                          LEFT JOIN pegawai pk ON t.id_kasir = pk.id_pegawai
                                           WHERE t.no_transaksi = '$no_transaksi'"); // Changed from s.noservice
 
     if (mysqli_num_rows($query_transaksi) > 0) {
@@ -34,53 +34,8 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
 ?>
 <body>
     <form action="" method="post">
-        <div class="wrapper d-flex align-items-stretch">
-            <nav id="sidebar">
-                <div class="p-4 pt-5">
-                    <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(../images/bengkel.png);"></a>
-                    <ul class="list-unstyled components mb-5">
-                        <li><a href="../home.php">Home</a></li>
-                        <li><a href="../pelanggan/pelanggan-lihat.php">Pelanggan</a></li>
-                        <li><a href="../pegawai/pegawai-lihat.php">Pegawai</a></li>
-                        <li><a href="../barang/barang-lihat.php">Produk</a></li>
-                        <li><a href="../Kendaraan/Kendaraan-lihat.php">Kendaraan</a></li>
-                        <li class="active"><a href="#" data-toggle="collapse" aria-expanded="false">Transaksi</a></li>
-                        <li><a href="../index.php" onclick="return confirm('yakin keluar?')">Logout</a></li>
-                    </ul>
-                    <div class="footer">
-            <p>Narendra Aryo &copy;<script>
-                document.write(new Date().getFullYear());
-              </script> <br>   <i class="icon-heart" aria-hidden="true"></i>
-              </p>
-        </div>
-                </div>
-            </nav>
-
+        
             <div id="content" class="p-4 p-md-5">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                            <i class="fa fa-bars"></i>
-                            <span class="sr-only">Toggle Menu</span>
-                        </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-bars"></i>
-                            <i class="fa fa-bars"></i>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item"><a class="nav-link" href="../home.php">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#pelanggan">Pelanggan</a></li>
-                                <li class="nav-item"><a class="nav-link" href="../pegawai/pegawai-lihat.php">Pegawai</a></li>
-                                <li class="nav-item"><a class="nav-link" href="../barang/barang-lihat.php">Produk</a></li>
-                                <li class="nav-item"><a class="nav-link" href="../Kendaraan/Kendaraan-lihat.php">Kendaraan</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="#">Transaksi</a></li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-
                 <div class="form">
                     <label class="form-label" style="text-align: center; font-size: large; width:100%;">
                         DETAIL TRANSAKSI: <?php echo htmlspecialchars($data_transaksi['no_transaksi']); ?>
@@ -102,7 +57,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                     </div>
                     <div class="form-element">
                         <label class="form-label" style="display: inline-block; width: 120px;">Nama Pelanggan</label>
-                        <input class="form-control" value="<?php echo htmlspecialchars($data_transaksi['namacustomer']); ?>" style="display: inline-block; width: calc(100% - 130px);" readonly>
+                        <input class="form-control" value="<?php echo htmlspecialchars($data_transaksi['nama_cos']); ?>" style="display: inline-block; width: calc(100% - 130px);" readonly>
                     </div>
                     <div class="form-element">
                         <label class="form-label" style="display: inline-block; width: 120px;">Mekanik</label>
@@ -136,7 +91,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                <label class="form-label" style="text-align: center; font-size: large; width:100%;">DETAIL PRODUK & JASA</label>
                 <hr>
                 <div class="mb-3">
-                    <a type="button" class="btn btn-success" href="notadetail-tambah.php?no_transaksi=<?php echo htmlspecialchars($data_transaksi['no_transaksi']); ?>">Tambah Produk/Jasa</a>
+                    <a type="button" class="btn btn-success" href="p-tambah.php?no_transaksi=<?php echo htmlspecialchars($data_transaksi['no_transaksi']); ?>">Tambah Produk/Jasa</a>
                     <a type="button" class="btn btn-warning" href="notacetak.php?no_transaksi=<?php echo htmlspecialchars($data_transaksi['no_transaksi']); ?>" style="color:white;">Cetak</a>
                 </div>
 
@@ -156,7 +111,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                     <tbody>
                         <?php
                         // Query untuk mengambil detail pembayaran
-                        $query_detail = mysqli_query($conn, "SELECT dt.*, p.idproduk, p.namaproduk, p.harga
+                        $query_detail = mysqli_query($conn, "SELECT dt.*, p.idproduk, p.nama_barang_jasa, p.harga
                                                              FROM detail_pembayaran dt
                                                              JOIN produk p ON dt.idproduk = p.idproduk
                                                              WHERE dt.no_transaksi = '$no_transaksi'"); // Changed from detail_service and noservice
@@ -176,13 +131,13 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                                 <tr>
                                     <td><?php echo $index++; ?></td>
                                     <td><?php echo htmlspecialchars($detail['banyaknya']); ?></td>
-                                    <td style="text-align: left; padding-left: 10px;"><?php echo htmlspecialchars($detail['namaproduk']); ?></td>
+                                    <td style="text-align: left; padding-left: 10px;"><?php echo htmlspecialchars($detail['nama_barang_jasa']); ?></td>
                                     <td style="text-align: right; padding-right: 10px;">Rp <?php echo number_format($detail['harga']); ?></td>
                                     <td style="text-align: right; padding-right: 10px;">Rp <?php echo number_format($jumlah); ?></td>
                                     
                                     <td style="white-space: nowrap;">
-                                        <a class="btn btn-primary btn-sm" href="notadetail-ubah.php?no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&idproduk=<?php echo htmlspecialchars($detail['idproduk']); ?>">Ubah</a>
-                                        <a class="btn btn-danger btn-sm" href="notadetail-hapus.php?no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&idproduk=<?php echo htmlspecialchars($detail['idproduk']); ?>" onclick="return confirm('Yakin hapus?')">Hapus</a>
+                                        <a class="btn btn-primary btn-sm" href="p-detailubah.php?no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&idproduk=<?php echo htmlspecialchars($detail['idproduk']); ?>">Ubah</a>
+                                        <a class="btn btn-danger btn-sm" href="p-detailhapus.php?no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&idproduk=<?php echo htmlspecialchars($detail['idproduk']); ?>" onclick="return confirm('Yakin hapus?')">Hapus</a>
                                     </td>
                                 </tr>
                         <?php 
