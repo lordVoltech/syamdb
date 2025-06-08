@@ -3,7 +3,7 @@
     $query = mysqli_query($conn, "Select*from pembayaran where no_transaksi = '$_GET[no_transaksi]'");
     $data = mysqli_fetch_array($query);
     
-    
+    $no_transaksi = $_GET['no_transaksi'];
     $query_barang_jasa = mysqli_query($conn, "SELECT dp.id_barang_jasa, b.nama_barang_jasa, dp.qty, dp.sub_total
                                                 FROM detail_pembayaran dp
                                                 JOIN barang_jasa b ON dp.id_barang_jasa = b.id_barang_jasa
