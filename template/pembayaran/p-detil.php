@@ -124,7 +124,9 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped text-center">
                         <?php
-                            $query_barang_jasa = mysqli_query($conn, "SELECT id_barang_jasa, qty, sub_total FROM detail_pembayaran WHERE no_transaksi = '$_GET[no_transaksi]'");
+                            $query_barang_jasa = mysqli_query($conn, "SELECT nama_barang_jasa, qty, sub_total FROM detail_pembayaran 
+                                                                        join barang_jasa on detail_pembayaran.id_barang_jasa = barang_jasa.id_barang_jasa 
+                                                                        WHERE no_transaksi = '$_GET[no_transaksi]'");
                             $barang_jasa_details = [];
                             while ($row = mysqli_fetch_assoc($query_barang_jasa)) {
                                 $barang_jasa_details[] = $row;
