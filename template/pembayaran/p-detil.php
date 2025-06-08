@@ -1,10 +1,6 @@
 <?php
 include '../koneksi.php';
 
-// =================================================================
-// BAGIAN 1: Mengambil Data Induk Transaksi
-// =================================================================
-
 if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi'
     $no_transaksi = $_GET['no_transaksi']; // Changed from $noservice
 
@@ -32,7 +28,11 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
     die("Nomor Transaksi tidak disediakan di URL."); // Changed error message
 }
 ?>
-<body>
+
+    <div class="row">
+    <div class="col-lg-8 grid-margin stretch-card mx-auto">
+        <div class="card">
+            <div class="card-body">
     <form action="" method="post">
         
             <div id="content" class="p-4 p-md-5">
@@ -174,9 +174,3 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
         </div>
     </form>
 
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/popper.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/main.js"></script>
-</body>
-</html>
