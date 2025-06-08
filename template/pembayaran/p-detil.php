@@ -108,7 +108,7 @@
                 <hr class="my-4"> <h4 class="text-center mb-4">DETAIL BARANG DAN JASA</h4>
                 <div class="table-responsive">
                     <div class="text-left mt-4">
-                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtammbah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Tambah</a><br><br>
+                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtambah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Tambah</a><br><br>
                     </div>
                     <table class="table table-bordered table-striped text-center">
                         <?php
