@@ -40,6 +40,7 @@
                     <td><?php echo $data['km'] ;?></td>
                     <td><?php echo $data['grand_total'] ;?></td>
                     <td>
+                    <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detil&no_transaksi=<?php echo $data['no_transaksi'];?>" >detail</a><br><br>
                     <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-ubah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Edit</a><br><br>
                     <a class="badge badge-danger" href="pembayaran/p-hapus.php?no_transaksi=<?php echo $data['no_transaksi']; ?>" onclick="return confirm('Anda yakin ingin menghapus data ini?')">Hapus</a>				
                     </td>
