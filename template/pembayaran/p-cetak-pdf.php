@@ -5,8 +5,9 @@ ini_set('display_errors', 1); // Menampilkan error di output HTML
 ini_set('display_startup_errors', 1); // Menampilkan error saat startup
 // ----------------------------------------
 
-
-require_once __DIR__ . '/../../vendor/autoload.php'; // Naik dua level direktori
+// Ganti placeholder ini dengan path absolut yang Anda dapatkan dari get_path.php
+define('PROJECT_ROOT', '/home/u951570841/domains/indigo-ibis-712804.hostingersite.com/public_html');
+require_once PROJECT_ROOT . '/vendor/autoload.php';
 include 'koneksi.php'; // Pastikan koneksi.php sudah benar
 
 use Dompdf\Dompdf;
