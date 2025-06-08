@@ -10,7 +10,7 @@
     <div class="col-lg-10 mx-auto">
         <div class="card">
             <div class="card-body">
-                <h4 class="text-center">FORM TAMBAH</h4>
+                <h4 class="text-center">Pembayaran</h4>
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-md-6">
@@ -60,11 +60,6 @@
                                 <label>Nopol</label>
                                 <p class="form-control-static">
                                     <?php
-                                    // This block assumes $conn is available and 'motor' table exists
-                                    // You might need to fetch the full name or description if 'no_pol' isn't descriptive enough
-                                    // If $data['no_pol'] already contains the desired display value, just echo it.
-                                    // If you still need to query the database to get the name from the ID, you would do it here.
-                                    // For now, I'll assume $data['no_pol'] is the display value.
                                     echo htmlspecialchars($data['no_pol']);
                                     ?>
                                 </p>
@@ -74,16 +69,6 @@
                                 <label>Mekanik</label>
                                 <p class="form-control-static">
                                     <?php
-                                    // Assuming $conn is available and 'pegawai' table exists
-                                    // This is where you would fetch the mechanic's name based on $data['id_mekanik']
-                                    // For now, I'm assuming $data['id_mekanik'] *might* be the display name,
-                                    // but ideally, you'd fetch the 'nama' using $data['id_mekanik']
-                                    // Example (if data fetched from your original combined query in the first example):
-                                    // echo htmlspecialchars($data['nama_mekanik']);
-                                    // If $data only contains 'id_mekanik' and 'id_kasir', you'll need to run separate queries here
-                                    
-                                    // To fetch name if $data only contains id_mekanik/id_kasir (and not names directly from main query)
-                                    // This part is "weird" as requested, keeping the spirit of the original loop
                                     $mechanic_name = 'N/A';
                                     if (isset($conn) && isset($data['id_mekanik'])) {
                                         $query_mekanik = mysqli_query($conn, "SELECT nama FROM pegawai WHERE id_pegawai = '" . mysqli_real_escape_string($conn, $data['id_mekanik']) . "' LIMIT 1");
@@ -123,8 +108,8 @@
                 <hr class="my-4"> <h4 class="text-center mb-4">DETAIL BARANG DAN JASA</h4>
                 <div class="table-responsive">
                     <div class="text-left mt-4">
-                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtambah">tambah item</a>
-                        </div>
+                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtammbah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Tambah</a><br><br>
+                    </div>
                     <table class="table table-bordered table-striped text-center">
                         <?php
                             $query_barang_jasa = mysqli_query($conn, "SELECT nama_barang_jasa, qty, sub_total FROM detail_pembayaran 
