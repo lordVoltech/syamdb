@@ -5,7 +5,7 @@
             
     $barang_jasa_details = [];
     if (isset($conn) && isset($data['no_transaksi'])) {
-        $query_barang_jasa = mysqli_query($conn, "SELECT id_barang_jasa, qty, sub_total FROM barang_jasa WHERE no_transaksi = '$_GET[no_transaksi]'");
+        $query_barang_jasa = mysqli_query($conn, "SELECT id_barang_jasa, qty, sub_total FROM barang_jasa WHERE no_transaksi = '" . mysqli_real_escape_string($conn, $_GET['no_transaksi']) . "'");
         while ($row = mysqli_fetch_assoc($query_barang_jasa)) {
             $barang_jasa_details[] = $row;
         }
