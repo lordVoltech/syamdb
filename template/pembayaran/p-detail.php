@@ -141,6 +141,8 @@
                                             <td><?php echo htmlspecialchars($item['qty']); ?></td>
                                             <td>Rp <?php echo htmlspecialchars(number_format($item['sub_total'], 0, ',', '.')); ?></td>
                                             <td>
+                                                <a href="index.php?folder=pembayaran&page=p-detailedit&no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&id_barang_jasa=<?php echo htmlspecialchars($item['id_barang_jasa']); ?>"
+                                                   class="btn btn-warning btn-sm mr-1">Edit</a>
                                                 <a href="index.php?folder=pembayaran&page=p-detailhapus&no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&id_barang_jasa=<?php echo htmlspecialchars($item['id_barang_jasa']); ?>"
                                                    class="btn btn-danger btn-sm"
                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?');">Hapus</a>
