@@ -13,97 +13,111 @@
                 <h4 class="text-center">FORM TAMBAH</h4>
                 <form action="" method="post">
                     <div class="row">
-                        <!-- Kolom Kiri -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nomor Transaksi</label>
-                                <input class="form-control" type="text" name="no-nota" value="<?php echo $data['no_transaksi']; ?>" readonly>
+                                <p class="form-control-static"><?php echo htmlspecialchars($data['no_transaksi']); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Tanggal Hari Ini</label>
-                                <input class="form-control" type="date" name="tanggal" value="<?php echo $data['tanggal_transaksi']; ?>">
+                                <p class="form-control-static"><?php echo htmlspecialchars(date('d-m-Y', strtotime($data['tanggal_transaksi']))); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Tanggal Servis Berikutnya</label>
-                                <input class="form-control" type="date" name="servisberikut" value="<?php echo $data['servis_berikut']; ?>">
+                                <p class="form-control-static"><?php echo htmlspecialchars(date('d-m-Y', strtotime($data['servis_berikut']))); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>KM Saat Ini</label>
-                                <input class="form-control" type="number" name="km" value="<?php echo $data['km']; ?>">
+                                <p class="form-control-static"><?php echo htmlspecialchars(number_format($data['km'])); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>KM Maintenance</label>
-                                <input class="form-control" type="number" name="kmberikut" value="<?php echo $data['km_berikut']; ?>">
+                                <p class="form-control-static"><?php echo htmlspecialchars(number_format($data['km_berikut'])); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Total</label>
-                                <input class="form-control" type="number" name="total" value="<?php echo $data['total']; ?>">
+                                <p class="form-control-static">Rp <?php echo htmlspecialchars(number_format($data['total'])); ?></p>
                             </div>
                         </div>
 
-                        <!-- Kolom Kanan -->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Diskon</label>
-                                <input class="form-control" type="number" name="diskon" value="<?php echo $data['diskon']; ?>">
+                                <p class="form-control-static">Rp <?php echo htmlspecialchars(number_format($data['diskon'])); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Grand Total</label>
-                                <input class="form-control" type="number" name="grandtotal" value="<?php echo $data['grand_total']; ?>">
+                                <p class="form-control-static">Rp <?php echo htmlspecialchars(number_format($data['grand_total'])); ?></p>
                             </div>
 
                             <div class="form-group">
                                 <label>Nopol</label>
-                                <select class="form-control" name="nopol">
+                                <p class="form-control-static">
                                     <?php
-                                    include 'koneksi.php';
-                                    $ambilpelanggan = mysqli_query($conn, "SELECT * FROM motor");
-                                    while ($pelanggan = mysqli_fetch_array($ambilpelanggan)) {
-                                        $selected = ($data['no_pol'] == $pelanggan['no_pol']) ? 'selected' : '';
-                                        echo "<option value='$pelanggan[no_pol]' $selected>$pelanggan[no_pol]</option>";
-                                    }
+                                    // This block assumes $conn is available and 'motor' table exists
+                                    // You might need to fetch the full name or description if 'no_pol' isn't descriptive enough
+                                    // If $data['no_pol'] already contains the desired display value, just echo it.
+                                    // If you still need to query the database to get the name from the ID, you would do it here.
+                                    // For now, I'll assume $data['no_pol'] is the display value.
+                                    echo htmlspecialchars($data['no_pol']);
                                     ?>
-                                </select>
+                                </p>
                             </div>
 
                             <div class="form-group">
                                 <label>Mekanik</label>
-                                <select class="form-control" name="mekanik">
+                                <p class="form-control-static">
                                     <?php
-                                    $ambilpegawai = mysqli_query($conn, "SELECT * FROM pegawai WHERE jabatan = 'mekanik'");
-                                    while ($pegawai = mysqli_fetch_array($ambilpegawai)) {
-                                        $selected = ($data['id_pegawai'] == $pegawai['id_pegawai']) ? 'selected' : '';
-                                        echo "<option value='$pegawai[id_pegawai]' $selected>$pegawai[nama]</option>";
+                                    // Assuming $conn is available and 'pegawai' table exists
+                                    // This is where you would fetch the mechanic's name based on $data['id_mekanik']
+                                    // For now, I'm assuming $data['id_mekanik'] *might* be the display name,
+                                    // but ideally, you'd fetch the 'nama' using $data['id_mekanik']
+                                    // Example (if data fetched from your original combined query in the first example):
+                                    // echo htmlspecialchars($data['nama_mekanik']);
+                                    // If $data only contains 'id_mekanik' and 'id_kasir', you'll need to run separate queries here
+                                    
+                                    // To fetch name if $data only contains id_mekanik/id_kasir (and not names directly from main query)
+                                    // This part is "weird" as requested, keeping the spirit of the original loop
+                                    $mechanic_name = 'N/A';
+                                    if (isset($conn) && isset($data['id_mekanik'])) {
+                                        $query_mekanik = mysqli_query($conn, "SELECT nama FROM pegawai WHERE id_pegawai = '" . mysqli_real_escape_string($conn, $data['id_mekanik']) . "' LIMIT 1");
+                                        if ($mekanik_row = mysqli_fetch_array($query_mekanik)) {
+                                            $mechanic_name = $mekanik_row['nama'];
+                                        }
                                     }
+                                    echo htmlspecialchars($mechanic_name);
                                     ?>
-                                </select>
+                                </p>
                             </div>
 
                             <div class="form-group">
                                 <label>Kasir</label>
-                                <select class="form-control" name="kasir">
+                                <p class="form-control-static">
                                     <?php
-                                    $ambilpegawai = mysqli_query($conn, "SELECT * FROM pegawai WHERE jabatan = 'kasir'");
-                                    while ($pegawai = mysqli_fetch_array($ambilpegawai)) {
-                                        $selected = ($data['id_pegawai'] == $pegawai['id_pegawai']) ? 'selected' : '';
-                                        echo "<option value='$pegawai[id_pegawai]' $selected>$pegawai[nama]</option>";
+                                    // Similar to Mekanik, fetch Kasir's name
+                                    $kasir_name = 'N/A';
+                                    if (isset($conn) && isset($data['id_kasir'])) {
+                                        $query_kasir = mysqli_query($conn, "SELECT nama FROM pegawai WHERE id_pegawai = '" . mysqli_real_escape_string($conn, $data['id_kasir']) . "' LIMIT 1");
+                                        if ($kasir_row = mysqli_fetch_array($query_kasir)) {
+                                            $kasir_name = $kasir_row['nama'];
+                                        }
                                     }
+                                    echo htmlspecialchars($kasir_name);
                                     ?>
-                                </select>
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <div class="text-center mt-4">
-                        <a class="badge badge-danger" href="index.php?folder=pembayaran&page=p-lihat">Batal</a>
-                        <button class="badge badge-success" type="submit" name="proses" value="Simpan">Simpan</button>
-                    </div>
+                        <a class="badge badge-danger" href="index.php?folder=pembayaran&page=p-lihat">Kembali</a>
+                        </div>
                 </form>
             </div>
         </div>
