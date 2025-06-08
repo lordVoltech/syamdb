@@ -1,4 +1,11 @@
 <?php
+// --- DEBUGGING: AKTIFKAN LAPORAN ERROR ---
+error_reporting(E_ALL); // Melaporkan semua jenis error
+ini_set('display_errors', 1); // Menampilkan error di output HTML
+ini_set('display_startup_errors', 1); // Menampilkan error saat startup
+// ----------------------------------------
+
+
 require_once __DIR__ . '/../../vendor/autoload.php'; // Naik dua level direktori
 include 'koneksi.php'; // Pastikan koneksi.php sudah benar
 
