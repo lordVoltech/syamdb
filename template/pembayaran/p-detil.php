@@ -147,7 +147,7 @@
                             <?php else: ?>
                                 <?php foreach ($barang_jasa_details as $item): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($item['id_barang_jasa']); ?></td>
+                                        <td><?php echo htmlspecialchars($item['nama_barang_jasa']); ?></td>
                                         <td><?php echo htmlspecialchars($item['qty']); ?></td>
                                         <td>Rp <?php echo htmlspecialchars(number_format($item['sub_total'], 2, ',', '.')); ?></td>
                                     </tr>
