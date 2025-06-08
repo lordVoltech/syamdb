@@ -3,6 +3,13 @@
     $query = mysqli_query($conn, "Select*from pembayaran where no_transaksi = '$_GET[no_transaksi]'");
     $data = mysqli_fetch_array($query);
             
+    $barang_jasa_details = [];
+    if (isset($conn) && isset($data['no_transaksi'])) {
+        $query_barang_jasa = mysqli_query($conn, "SELECT id_barang_jasa, qty, sub_total FROM barang_jasa WHERE no_transaksi = '$_GET[no_transaksi]'");
+        while ($row = mysqli_fetch_assoc($query_barang_jasa)) {
+            $barang_jasa_details[] = $row;
+        }
+    }
 ?>
   
 <html>
