@@ -2,7 +2,17 @@
     include 'koneksi.php';
     $query = mysqli_query($conn, "Select*from pembayaran where no_transaksi = '$_GET[no_transaksi]'");
     $data = mysqli_fetch_array($query);
-            
+    
+    
+    $query_barang_jasa = mysqli_query($conn, "SELECT dp.id_barang_jasa, b.nama_barang_jasa, dp.qty, dp.sub_total
+                                                FROM detail_pembayaran dp
+                                                JOIN barang_jasa b ON dp.id_barang_jasa = b.id_barang_jasa
+                                                WHERE dp.no_transaksi = '$_GET[no_transaksi]'");
+    $barang_jasa_details = [];
+    while ($row = mysqli_fetch_assoc($query_barang_jasa)) {
+        $barang_jasa_details[] = $row;
+    }
+
 ?>
   
 <html>
@@ -105,45 +115,42 @@
                         </div>
                 </form>
 
-                <hr class="my-4"> <h4 class="text-center mb-4">DETAIL BARANG DAN JASA</h4>
-                <div class="table-responsive">
-                    <div class="text-left mt-4">
-                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtambah&no_transaksi=<?php echo $data['no_transaksi'];?>" >Tambah</a><br><br>
+                <h4 class="text-center mb-4">DETAIL BARANG DAN JASA</h4>
+                    <div class="text-left mb-3">
+                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtambah&no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>">Tambah Item</a>
                     </div>
-                    <table class="table table-bordered table-striped text-center">
-                        <?php
-                            $query_barang_jasa = mysqli_query($conn, "SELECT nama_barang_jasa, qty, sub_total FROM detail_pembayaran 
-                                                                        join barang_jasa on detail_pembayaran.id_barang_jasa = barang_jasa.id_barang_jasa 
-                                                                        WHERE no_transaksi = '$_GET[no_transaksi]'");
-                            $barang_jasa_details = [];
-                            while ($row = mysqli_fetch_assoc($query_barang_jasa)) {
-                                $barang_jasa_details[] = $row;
-                            }
-                        ?>
-                        <thead>
-                            <tr class="table-primary">
-                                <th style="width: 15%;">ID Barang Jasa</th>
-                                <th style="width: 15%;">Qty</th>
-                                <th style="width: 25%;">Sub Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (empty($barang_jasa_details)): ?>
-                                <tr>
-                                    <td colspan="3">Tidak ada data barang/jasa tambahan.</td>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th style="width: 30%;">Nama Barang Jasa</th>
+                                    <th style="width: 20%;">Qty</th>
+                                    <th style="width: 30%;">Sub Total</th>
+                                    <th style="width: 15%;">Aksi</th>
                                 </tr>
-                            <?php else: ?>
-                                <?php foreach ($barang_jasa_details as $item): ?>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($barang_jasa_details)): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($item['nama_barang_jasa']); ?></td>
-                                        <td><?php echo htmlspecialchars($item['qty']); ?></td>
-                                        <td>Rp <?php echo htmlspecialchars(number_format($item['sub_total'], 2, ',', '.')); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                                        <td colspan="3">Tidak ada data barang/jasa tambahan.</td>
+                                        </tr>
+                                <?php else: ?>
+                                    <?php foreach ($barang_jasa_details as $item): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($item['nama_barang_jasa']); ?></td>
+                                            <td><?php echo htmlspecialchars($item['qty']); ?></td>
+                                            <td>Rp <?php echo htmlspecialchars(number_format($item['sub_total'], 0, ',', '.')); ?></td>
+                                            <td>
+                                                <a href="index.php?folder=pembayaran&page=p-detailhapus&no_transaksi=<?php echo htmlspecialchars($no_transaksi); ?>&id_barang_jasa=<?php echo htmlspecialchars($item['id_barang_jasa']); ?>"
+                                                   class="btn btn-danger btn-sm"
+                                                   onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?');">Hapus</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
 
 
             </div>
