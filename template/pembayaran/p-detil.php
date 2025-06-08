@@ -115,9 +115,36 @@
                         </div>
                     </div>
 
-                    <div class="text-center mt-4">
+                    <div class="text-left mt-4">
                         <a class="badge badge-danger" href="index.php?folder=pembayaran&page=p-lihat">Kembali</a>
                         </div>
+                    
+                    <hr class="mt-4 mb-4"> <label class="form-label" style="text-align: center; font-size: large; width:100%;">DETAIL BARANG & JASA LAINNYA</label>
+                    <div class="table-responsive"> <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr class="table-primary" style="color: black; font-weight: bold;">
+                                    <th style="width: 15%;">ID Barang Jasa</th>
+                                    <th style="width: 15%;">Qty</th>
+                                    <th style="width: 25%;">Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($barang_jasa_details)): ?>
+                                    <tr>
+                                        <td colspan="3">Tidak ada data barang/jasa tambahan.</td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($barang_jasa_details as $item): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($item['id_barang_jasa']); ?></td>
+                                            <td><?php echo htmlspecialchars($item['qty']); ?></td>
+                                            <td>Rp <?php echo htmlspecialchars(number_format($item['sub_total'], 2, ',', '.')); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
             </div>
         </div>
@@ -125,25 +152,3 @@
 </div>
 
 </html>
-
-<?php
-
-if (isset($_POST['proses'])){
-    include 'koneksi.php';
-  
-    $noNota = $_POST['no-nota'];
-    $tanggal = $_POST['tanggal'];
-    $servisBerikut = $_POST['servisberikut'];
-    $km = $_POST['km'];
-    $kmBerikut = $_POST['kmberikut'];
-    $total = $_POST['total'];
-    $diskon = $_POST['diskon'];
-    $grandTotal = $_POST['grandtotal'];
-    $nopol = $_POST['nopol'];
-    $mekanik = $_POST['mekanik'];
-    $kasir = $_POST['kasir'];
-    
-    mysqli_query($conn, "UPDATE pembayaran SET tanggal_transaksi='$tanggal', servis_berikut='$servisBerikut', km='$km', km_berikut='$kmBerikut', total='$total', diskon='$diskon', grand_total='$grandTotal', id_mekanik='$mekanik', id_kasir='$kasir' WHERE no_transaksi='$noNota'");
-    echo"<script>window.location.href = 'index.php?folder=pembayaran&page=p-lihat';</script>";
-}
-?>
