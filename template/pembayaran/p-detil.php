@@ -122,6 +122,9 @@
 
                 <hr class="my-4"> <h4 class="text-center mb-4">DETAIL BARANG DAN JASA</h4>
                 <div class="table-responsive">
+                    <div class="text-left mt-4">
+                        <a class="badge badge-primary" href="index.php?folder=pembayaran&page=p-detailtambah">tambah item</a>
+                        </div>
                     <table class="table table-bordered table-striped text-center">
                         <?php
                             $query_barang_jasa = mysqli_query($conn, "SELECT nama_barang_jasa, qty, sub_total FROM detail_pembayaran 
