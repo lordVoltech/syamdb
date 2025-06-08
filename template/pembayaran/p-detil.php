@@ -1,5 +1,5 @@
 <?php
-include '../koneksi.php';
+include 'koneksi.php';
 
 if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi'
     $no_transaksi = $_GET['no_transaksi']; // Changed from $noservice
@@ -13,10 +13,10 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                                             pm.nama AS nama_mekanik,
                                             pk.nama AS nama_kasir
                                           FROM pembayaran t
-                                          LEFT JOIN motor k ON t.no_pol = k.no_pol
-                                          LEFT JOIN costomer c ON k.id_cos = c.id_cos
-                                          LEFT JOIN pegawai pm ON t.id_mekanik = pm.id_pegawai
-                                          LEFT JOIN pegawai pk ON t.id_kasir = pk.id_pegawai
+                                            JOIN motor k ON t.no_pol = k.no_pol
+                                            JOIN costomer c ON k.id_cos = c.id_cos
+                                            JOIN pegawai pm ON t.id_mekanik = pm.id_pegawai
+                                            JOIN pegawai pk ON t.id_kasir = pk.id_pegawai
                                           WHERE t.no_transaksi = '$no_transaksi'"); // Changed from s.noservice
 
     if (mysqli_num_rows($query_transaksi) > 0) {
