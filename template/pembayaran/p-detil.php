@@ -16,7 +16,7 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
                                             c.namacustomer, 
                                             pm.namapegawai AS nama_mekanik,
                                             pk.namapegawai AS nama_kasir
-                                          FROM transaksi t
+                                          FROM pembayaran t
                                           LEFT JOIN kendaraan k ON t.no_pol = k.no_pol
                                           LEFT JOIN customer c ON k.idcustomer = c.idcustomer
                                           LEFT JOIN pegawai pm ON t.id_mekanik = pm.idpegawai
@@ -32,19 +32,6 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
     die("Nomor Transaksi tidak disediakan di URL."); // Changed error message
 }
 ?>
-
-<!doctype html>
-<html lang="en">
-
-<head>
-    <title>notadetail-lihat</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-
 <body>
     <form action="" method="post">
         <div class="wrapper d-flex align-items-stretch">
@@ -168,9 +155,9 @@ if (isset($_GET['no_transaksi'])) { // Changed from 'noservice' to 'no_transaksi
 
                     <tbody>
                         <?php
-                        // Query untuk mengambil detail transaksi
+                        // Query untuk mengambil detail pembayaran
                         $query_detail = mysqli_query($conn, "SELECT dt.*, p.idproduk, p.namaproduk, p.harga
-                                                             FROM detail_transaksi dt
+                                                             FROM detail_pembayaran dt
                                                              JOIN produk p ON dt.idproduk = p.idproduk
                                                              WHERE dt.no_transaksi = '$no_transaksi'"); // Changed from detail_service and noservice
 
